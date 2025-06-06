@@ -1,4 +1,5 @@
 module.exports = {
+
     // Rate Limiting Config
     rateLimitWindowMs: 15 * 60 * 1000, // 15 minutes
     rateLimitMaxRequests: 100,        // Max 100 requests per IP per window
@@ -9,6 +10,14 @@ module.exports = {
         port: process.env.REDIS_PORT || 6379
         // password: 'your_redis_password' // Optional
     },
-    env:"development"
+    env:"development",
+    port:8083,
+    db:{
+        database: process.env.DB_NAME ,
+        username: process.env.DB_USER,
+        password: process.env.DB_PASSWORD || "password123",
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT
+    }
 };
   

@@ -68,9 +68,5 @@ process.on('unhandledRejection', (reason, promise) => {
     process.exit(1);
 });
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
 
 module.exports = app;
