@@ -1,3 +1,6 @@
+
+require('dotenv').config();
+
 module.exports = {
 
     // Rate Limiting Config
@@ -10,14 +13,13 @@ module.exports = {
         port: process.env.REDIS_PORT || 6379
         // password: 'your_redis_password' // Optional
     },
-    env:"development",
-    port:8083,
-    db:{
-        database: process.env.DB_NAME ,
+    env: process.env.NODE_ENV,
+    port: process.env.PORT,
+    db: {
+        database: process.env.DB_NAME,
         username: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         host: process.env.DB_HOST,
         port: process.env.DB_PORT
     }
 };
-  
