@@ -41,7 +41,27 @@ const login = async (req, res) => {
     }
 }
 
+const resetPassword = async (req, res) => {
+    const { password, email } = req.body;
+
+    if (!password) {
+        res.status(400).send("password is required!")
+    }
+    try {
+        const response = await UserService.resetPassword({ password, email });
+        if (response.status == "success") {
+            logger.info("Password Reset successfull")
+            res.status(200).json({ message: "password updated succesfully" })
+        } else {
+            res.status(500).json({ error: "Error in password reset" })
+        }
+    } catch (err) {
+        logger.error("Error updating password",err)
+    }
+}
+
 module.exports = {
     signup,
-    login
+    login,
+    resetPassword
 }

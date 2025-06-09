@@ -1,7 +1,7 @@
 const logger = require('../../config/logger');
 const { User } = require("../models")
 
-
+// sign up new user
 const signup = async ({ name, email, password }) => {
     try {
         const isUserExists = await User.findOne({
@@ -29,6 +29,7 @@ const signup = async ({ name, email, password }) => {
     }
 }
 
+// login already present user
 const login = async ({ email, password }) => {
     try {
         const user = await User.findOne({
@@ -40,6 +41,7 @@ const login = async ({ email, password }) => {
                 error: "please register the user!"
             }
         }
+        // used custom validPassword function in user model to handle password checks
         const isLoggedin = await user.isValidPassword(password)
 
         if (isLoggedin) {
@@ -57,7 +59,34 @@ const login = async ({ email, password }) => {
     }
 }
 
-module.exports = {
-    signup,
-    login
+// reset password for user
+const resetPassword = async({email,password})=>{
+  try {
+    const user = await User.findOne({
+        where:{email}
+    })
+
+    if(!user){
+        return {
+          status : "failure",
+          error : "this user doesn't exists"
+        }
+    }
+
+    user.password = password;
+    await user.save();
+
+    return {
+        status : "success",
+        data : user
+    }
+   
+  } catch(err){
+    logger.error("Error in Reset password", err)
+  }
 }
+    module.exports = {
+        signup,
+        login,
+        resetPassword
+    }
