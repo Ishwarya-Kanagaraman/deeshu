@@ -3,8 +3,6 @@ const logger = require('../config/logger');
 const sequelize  = require('../config/database');
 const config = require('../config');
 const redisClient = require('../config/redis');
-// const redisClient = require('../config/redis');
-
 const PORT = config.port || 8083;
 
 // Server instance
@@ -26,6 +24,8 @@ async function startServer() {
         // Test Redis connection
         await redisClient.ping();
         logger.info('✅ Redis connection established successfully');
+
+
 
         // Start HTTP server
         server = app.listen(PORT, () => {
@@ -75,7 +75,7 @@ async function gracefulShutdown(signal) {
     const forceShutdownTimeout = setTimeout(() => {
         logger.error('❌ Forced shutdown due to timeout');
         process.exit(1);
-    }, 30000); // 30 seconds timeout
+    }, 30000); // 30 seconds timeout for
 
     try {
         // Stop accepting new connections
