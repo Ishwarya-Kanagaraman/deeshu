@@ -1,11 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const { notFoundHandler, errorHandler } = require('./middleware/errorHandler');
-const config = require('./config/index');
 const logger = require('./middleware/logger');
-const PORT = process.env.PORT || 8083
+const routes = require('./src/routes');
 
 
 const app = express();
@@ -26,6 +24,7 @@ app.use(helmet({
     crossOriginEmbedderPolicy: false
 }));
 
+app.use(express.json())
 // CORS configuration
 app.use(cors({
     origin: function (origin, callback) {
@@ -49,6 +48,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
+app.use("/", routes)
 
 // 404 handler
 app.use(notFoundHandler);
